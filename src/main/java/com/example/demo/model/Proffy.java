@@ -28,6 +28,10 @@ public class Proffy {
 	public int getProffy_id() {
 		return proffy_id;
 	}
+	
+	public Proffy() {
+	}
+
 
 	public Proffy(String name, String avatar, String whatsapp, String bio) {
 	super();

@@ -26,6 +26,13 @@
     width: 100%;
 }
 
+.background-image {
+	width: 100%;
+	background-position: center;
+  	background-repeat: no-repeat;
+  	background-size: cover;
+}
+
 .buttons-container {
     display: flex;
     justify-content: center;

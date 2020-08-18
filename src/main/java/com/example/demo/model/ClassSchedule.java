@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,7 +15,7 @@ public class ClassSchedule {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Classes class_id;
 	
 	@Column
@@ -26,11 +27,20 @@ public class ClassSchedule {
 	@Column
 	private int time_to;
 	
-	public ClassSchedule(Classes class_id, int weekday, int time_from, int time_to) {
-		this.class_id = class_id;
+	public int convertHoursToMinutes(String time) {
+        int hour = Integer.parseInt(time.split(":")[0]);
+        int minutes = Integer.parseInt(time.split(":")[1]);
+        return ((hour * 60) + minutes);
+    }
+	
+	public ClassSchedule() {
+	}
+
+	public ClassSchedule(int id, int weekday, String time_from, String time_to) {
+		this.id = id;
 		this.weekday = weekday;
-		this.time_from = time_from;
-		this.time_to = time_to;
+		this.time_from = convertHoursToMinutes(time_from);
+		this.time_to = convertHoursToMinutes(time_to);
 	}
 
 	public int getId() {
@@ -41,11 +51,11 @@ public class ClassSchedule {
 		this.id = id;
 	}
 
-	public Classes getClass_id() {
+	public Classes getClasses() {
 		return class_id;
 	}
 
-	public void setClass_id(Classes class_id) {
+	public void setClasses(Classes class_id) {
 		this.class_id = class_id;
 	}
 
@@ -61,23 +71,30 @@ public class ClassSchedule {
 		return time_from;
 	}
 
-	public void setTime_from(int time_from) {
-		this.time_from = time_from;
+	public void setTime_from(String time_from) {
+		this.time_from = convertHoursToMinutes(time_from);
 	}
 
 	public int getTime_to() {
 		return time_to;
 	}
 
-	public void setTime_to(int time_to) {
-		this.time_to = time_to;
+	public void setTime_to(String time_to) {
+		this.time_to = convertHoursToMinutes(time_to);
 	}
 
 	@Override
 	public String toString() {
-		return "ClassSchedule [id=" + id + ", class_id=" + class_id + ", weekday=" + weekday + ", time_from="
-				+ time_from + ", time_to=" + time_to + "]";
+		return "ClassSchedule [id=" + id + ", classes=" + class_id + ", weekday=" + weekday + ", time_from=" + time_from
+				+ ", time_to=" + time_to + "]";
 	}
+	
+	
+	
+	
+
+	
+
 	
 	
 	

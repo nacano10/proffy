@@ -8,6 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proffy | Sua plataforma de estudos online</title>
+    
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/png">
 
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/partials/header.css">
@@ -19,6 +21,7 @@
         rel="stylesheet">
 
     <script src="/scripts/addField.js" defer></script>
+   
 </head>
 
 <body id="page-give-classes">
@@ -107,12 +110,12 @@
 
                         <div class="input-block">
                             <label for="time_from">Das</label>
-                            <input type="time" name="time_from[]" >
+                            <input type="time" name="time_from" >
                         </div>
 
                         <div class="input-block">
                             <label for="time_to">Até</label>
-                            <input type="time" name="time_to[]" >
+                            <input type="time" name="time_to" >
                         </div>
                     </div>
                 </fieldset>

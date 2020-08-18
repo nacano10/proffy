@@ -24,7 +24,11 @@ public class Classes {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Proffy proffy;	
 	
+	
 		
+	public Classes() {
+	}
+
 	public Classes(String subject, String cost, Proffy proffy) {
 		this.subject = subject;
 		this.cost = cost;
