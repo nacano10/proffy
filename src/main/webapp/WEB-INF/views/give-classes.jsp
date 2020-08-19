@@ -98,7 +98,7 @@
 
                         <div class="select-block">
                             <label for="weekday">Dia da semana</label>
-                            <select name="weekday" >
+                            <select name="weekday_string" >
                                 <option value="">Selecione um opção</option>
                                 <c:forEach	items="${weekdays}" var="weekday">
                                     <option value="${weekday.id}">
@@ -110,12 +110,12 @@
 
                         <div class="input-block">
                             <label for="time_from">Das</label>
-                            <input type="time" name="time_from" >
+                            <input type="time" name="time_from_string" >
                         </div>
 
                         <div class="input-block">
                             <label for="time_to">Até</label>
-                            <input type="time" name="time_to" >
+                            <input type="time" name="time_to_string" >
                         </div>
                     </div>
                 </fieldset>

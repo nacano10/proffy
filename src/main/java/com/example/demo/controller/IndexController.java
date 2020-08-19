@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.dao.ClassScheduleDao;
 import com.example.demo.dao.ClassesDao;
@@ -19,19 +21,19 @@ import com.example.demo.model.Weekday;
 
 @Controller
 public class IndexController {
-	
+
 	@Autowired
 	ProffyDao pDao;
-	
+
 	@Autowired
 	ClassesDao cDao;
-	
+
 	@Autowired
 	ClassScheduleDao csDao;
-	
+
 	@Autowired
 	Weekday weekday;
-	
+
 	@Autowired
 	Subject subject;
 
@@ -41,7 +43,7 @@ public class IndexController {
 	}
 
 	@GetMapping("/study")
-	public String study(Model model) {		
+	public String study(Model model) {
 		List<Weekday> weekdays = weekday.list();
 		List<Subject> subjects = subject.list();
 		List<Classes> proffys = cDao.findAll();
@@ -52,7 +54,7 @@ public class IndexController {
 	}
 
 	@GetMapping("/give-classes")
-	public String giveClasses(Model model) {		
+	public String giveClasses(Model model) {
 		List<Weekday> weekdays = weekday.list();
 		List<Subject> subjects = subject.list();
 		model.addAttribute("weekdays", weekdays);
@@ -61,18 +63,35 @@ public class IndexController {
 	}
 	
 	@PostMapping("/save-classes")
-	public String saveClasses(Proffy proffy, Classes classes, ClassSchedule classSchedule) {
-//		adicionar horario
+	public String saveClasses(@RequestParam("weekday_string") List<String> weekdayString, 
+								@RequestParam("time_from_string") List<String> timeFromString,
+								@RequestParam("time_to_string") List<String> timeFromTo,
+								Proffy proffy, 
+								Classes classes) {
+		
+		List<ClassSchedule> classSchedules = new ArrayList<>();
+		
+		for (int i = 0; i < weekdayString.size(); i++) {
+			ClassSchedule classSchedule = new ClassSchedule();
+			classSchedule.setWeekday(Integer.parseInt(weekdayString.get(i)));
+			classSchedule.setTime_from(timeFromString.get(i));
+			classSchedule.setTime_to(timeFromTo.get(i));	
+			
+			classSchedule.setClasses(classes);			
+			
+			classSchedules.add(classSchedule);
+		}
+		
 		classes.setProffy(proffy);
-		classSchedule.setClasses(classes);
-		System.out.println(proffy);
-		System.out.println(classes);
-		System.out.println(classSchedule);
+		
 		pDao.save(proffy);
 		cDao.save(classes);
-		csDao.save(classSchedule);
+		for (ClassSchedule classSchedule : classSchedules) {
+			csDao.save(classSchedule);
+			System.out.println(classSchedule);
+		}
+		
 		return "ok";
 	}
-	
-	
+
 }

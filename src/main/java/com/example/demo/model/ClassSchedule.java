@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,11 +38,11 @@ public class ClassSchedule {
 	public ClassSchedule() {
 	}
 
-	public ClassSchedule(int id, int weekday, String time_from, String time_to) {
+	public ClassSchedule(int id, int weekday, int time_from, int time_to) {
 		this.id = id;
 		this.weekday = weekday;
-		this.time_from = convertHoursToMinutes(time_from);
-		this.time_to = convertHoursToMinutes(time_to);
+		this.time_from = time_from;
+		this.time_to = time_to;
 	}
 
 	public int getId() {
