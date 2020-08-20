@@ -34,49 +34,54 @@
 				<strong>Esses são os proffys disponíveis</strong>
 				<form id="search-teachers">
 					<div class="select-block">
-						<label for="subject">Matéria</label> <select name="subject"
-							id="subject">
-							<option value="" disabled="" hidden="">Selecione uma
-								opção</option>
+						<label for="subject">Matéria</label> 
+						<select name="subject" id="subject">
+							<option value="" hidden="">Selecione uma opção</option>
 							<c:forEach items="${subjects}" var="subject">
 								<option value="${subject.id}">${subject.subject}</option>
 							</c:forEach>
 						</select>
 					</div>
 					<div class="select-block">
-						<label for="weekday">Dia da semana</label> <select name="weekday"
-							id="weekday">
-							<option value="" disabled="" hidden="">Selecione uma
-								opção</option>
+						<label for="weekday">Dia da semana</label> 
+						<select name="weekday" id="weekday">
+							<option value="" >Selecione uma opção</option>
 							<c:forEach items="${weekdays}" var="weekday">
 								<option value="${weekday.id}">${weekday.day}</option>
 							</c:forEach>
 						</select>
 					</div>
 					<div class="input-block">
-						<label for="time">Hora</label> <input name="time" id="time"
-							type="time" value="{{filters.time}}">
+						<label for="time">Hora</label>
+						<input 
+							name="time" 
+							id="time"
+							type="time" 
+							value="{{filters.time}}">
 					</div>
 					<button type="submit">Filtrar</button>
 				</form>
 			</div>
 		</header>
 
-		<main>
-			{% if proffys == "" %}
-			<p class="no-results">Nenhum professor encontrado com a sua
-				pesquisa</p>
-			{% else %}
+		<main>			
+			<c:if test="${csv.size() == 0}">
+				<p class="no-results">
+					Nenhum professor encontrado com a sua pesquisa
+				</p>
+			</c:if>
+				
+			<c:if test="${csv.size() > 0}">
 
-			<c:forEach items="${proffys}" var="proffy">
+			<c:forEach items="${csv}" var="cs">
 				<article class="teacher-item">
 					<header>
-						<img src="${proffy.proffy.avatar}" alt="${proffy.proffy.name}">
+						<img src="${cs.classes.proffy.avatar}" alt="${cs.classes.proffy.name}">
 						<div>
-							<strong>${proffy.proffy.name}</strong>
+							<strong>${cs.classes.proffy.name}</strong>
 
 							<c:forEach items="${subjects}" var="subject">
-								<c:set var="index" scope="session" value="${proffy.subject}" />
+								<c:set var="index" scope="session" value="${cs.classes.subject}" />
 								<c:if test="${subject.id == index}">
 
 									<span>${subject.subject}</span>
@@ -87,18 +92,18 @@
 						</div>
 					</header>
 
-					<p>${proffy.proffy.bio}</p>
+					<p>${cs.classes.proffy.bio}</p>
 
 					<footer>
 						<p>
-							Preço/hora<strong>R$ ${proffy.cost}</strong>
+							Preço/hora<strong>R$ ${cs.classes.cost}</strong>
 						</p>
 						<c:forEach items="${subjects}" var="subject">
-							<c:set var="index" scope="session" value="${proffy.subject}" />
+							<c:set var="index" scope="session" value="${cs.classes.subject}" />
 							<c:if test="${subject.id == index}">
 
 								<a
-									href="https://api.whatsapp.com/send?l=pt_BR&phone=55${proffy.proffy.whatsapp}&text=Tenho interesse na sua aula de ${subject.subject} ${proffy.proffy.name}"
+									href="https://api.whatsapp.com/send?l=pt_BR&phone=55${cs.classes.proffy.whatsapp}&text=Tenho interesse na sua aula de ${subject.subject} ${cs.classes.proffy.name}"
 									class="button" target="_blank"> <img
 									src="/images/icons/whatsapp.svg" alt="Whatsapp">Entrar em
 									contato
@@ -111,7 +116,7 @@
 					</footer>
 				</article>
 			</c:forEach>
-			{% endif %}
+			</c:if>
 
 
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.dao.ClassScheduleDao;
@@ -42,14 +43,29 @@ public class IndexController {
 		return "index";
 	}
 
-	@GetMapping("/study")
-	public String study(Model model) {
+	@RequestMapping("/study")
+	public String study(
+			Model model, 
+			@RequestParam(value="subject", required=false) Integer filtersSubject,
+			@RequestParam(value="weekday", required=false) Integer filtersWeekday,
+			@RequestParam(value="time", required=false) String timeToMinutes)	{
+		
+		List<ClassSchedule> classScheduleValues = new ArrayList<>();
+				
 		List<Weekday> weekdays = weekday.list();
-		List<Subject> subjects = subject.list();
-		List<Classes> proffys = cDao.findAll();
-		model.addAttribute("weekdays", weekdays);
+		List<Subject> subjects = subject.list();	
+	
+		
+		if (!(filtersSubject == null || filtersWeekday == null || timeToMinutes == "")) {
+			classScheduleValues = csDao.findTeacherBySubjectWeekdayTime(filtersSubject, filtersWeekday, ClassSchedule.convertHoursToMinutes(timeToMinutes));
+		} else {
+			classScheduleValues = csDao.findAll();
+		}
+		
 		model.addAttribute("subjects", subjects);
-		model.addAttribute("proffys", proffys);
+		model.addAttribute("weekdays", weekdays);
+		model.addAttribute("csv", classScheduleValues);
+		
 		return "study";
 	}
 

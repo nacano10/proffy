@@ -1,7 +1,5 @@
 package com.example.demo.model;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +27,7 @@ public class ClassSchedule {
 	@Column
 	private int time_to;
 	
-	public int convertHoursToMinutes(String time) {
+	public static int convertHoursToMinutes(String time) {
         int hour = Integer.parseInt(time.split(":")[0]);
         int minutes = Integer.parseInt(time.split(":")[1]);
         return ((hour * 60) + minutes);
