@@ -43,27 +43,6 @@
 	color: (--color-title-in-primary);
 }
 
-.buttons-container {
-	display: flex;
-	justify-content: center;
-	margin: 3.2rem 0;
-}
-
-.buttons-container a {
-	width: 30rem;
-	height: 10.4rem;
-	border-radius: 0.8rem;
-	margin-right: 1.6rem;
-	font: 700 2.4rem Archivo;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	text-decoration: none;
-	transition: background 0.2s;
-	color: var(--color-button-text);
-}
-
-
 @media (max-width: 1100px) {
     :root {
         font-size: 40%;

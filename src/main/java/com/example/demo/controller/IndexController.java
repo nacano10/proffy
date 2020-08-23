@@ -59,7 +59,8 @@ public class IndexController {
 		if (!(filtersSubject == null || filtersWeekday == null || timeToMinutes == "")) {
 			classScheduleValues = csDao.findTeacherBySubjectWeekdayTime(filtersSubject, filtersWeekday, ClassSchedule.convertHoursToMinutes(timeToMinutes));
 		} else {
-			classScheduleValues = csDao.findAll();
+			classScheduleValues = csDao.findTeacherDistinct();		
+			
 		}
 		
 		model.addAttribute("subjects", subjects);
@@ -88,6 +89,7 @@ public class IndexController {
 		List<ClassSchedule> classSchedules = new ArrayList<>();
 		
 		for (int i = 0; i < weekdayString.size(); i++) {
+			
 			ClassSchedule classSchedule = new ClassSchedule();
 			classSchedule.setWeekday(Integer.parseInt(weekdayString.get(i)));
 			classSchedule.setTime_from(timeFromString.get(i));
@@ -102,12 +104,13 @@ public class IndexController {
 		
 		pDao.save(proffy);
 		cDao.save(classes);
+		
 		for (ClassSchedule classSchedule : classSchedules) {
 			csDao.save(classSchedule);
 			System.out.println(classSchedule);
 		}
 		
-		return "ok";
+		return "success";
 	}
 
 }

@@ -88,13 +88,15 @@ public class ClassSchedule {
 		return "ClassSchedule [id=" + id + ", classes=" + class_id + ", weekday=" + weekday + ", time_from=" + time_from
 				+ ", time_to=" + time_to + "]";
 	}
-	
-	
+
 	
 	
 
 	
 
+	
+
+	
 	
 	
 	
